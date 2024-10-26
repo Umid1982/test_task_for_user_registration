@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\DTOs\UserDTO;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRequest extends FormRequest
@@ -26,5 +27,14 @@ class StoreRequest extends FormRequest
             'password' => 'required|string|min:8|max:255|confirmed',
             'gender' => 'required|string|in:male,female,other',
         ];
+    }
+
+    public function toDTO():UserDTO
+    {
+        return new UserDTO(
+            $this->get('email'),
+            $this->get('password'),
+            $this->get('gender'),
+        );
     }
 }
